@@ -3,7 +3,6 @@ package main
 import (
 	"fmt"
 	"freeTranslate/GetFileInfo"
-	"freeTranslate/count"
 	"freeTranslate/replace"
 	sql "freeTranslate/sql"
 	"freeTranslate/translateShell"
