@@ -31,7 +31,7 @@ jobs:
       - name: saveSpace
         run: rm -rf /opt/hostedtoolcache
       - name: export
-        run: docker save Trans:latest -o Trans.tar
+        run: docker save trans:latest -o trans.tar
       # More assembly might be required: Docker logins, GPG, etc.
       # It all depends on your needs.
       - name: Upload Build Artifacts
