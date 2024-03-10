@@ -1,7 +1,6 @@
 package translateShell
 
 import (
-	"freeTranslate/count"
 	"freeTranslate/replace"
 	"freeTranslate/sql"
 	"log/slog"
@@ -53,6 +52,5 @@ func Translate(src string) string {
 	his.Src = src
 	his.Dst = dst
 
-	count.Add("trans")
 	return dst
 }

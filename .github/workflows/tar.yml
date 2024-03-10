@@ -7,7 +7,7 @@ on:
     # run only against tags
     tags:
       - "*"
-    # branches: [ "master" ]
+    branches: [ "master" ]
 
 permissions:
   contents: write
@@ -27,11 +27,11 @@ jobs:
       - name: pwd
         run: pwd
       - name: build
-        run: docker build -t whisper:latest /home/runner/work/WhisperInDocker/WhisperInDocker
+        run: docker build -t trans:latest /home/runner/work/TransInDocker/TransInDocker
       - name: saveSpace
         run: rm -rf /opt/hostedtoolcache
       - name: export
-        run: docker save whisper:latest -o whisper.tar
+        run: docker save Trans:latest -o Trans.tar
       # More assembly might be required: Docker logins, GPG, etc.
       # It all depends on your needs.
       - name: Upload Build Artifacts

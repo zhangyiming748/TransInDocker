@@ -18,5 +18,5 @@ func TransByBing(proxy, language, src string, ans chan string) {
 		TransByBing(proxy, language, src, ans)
 	}
 	ans <- string(output)
-	close(ans)
+	//close(ans)
 }

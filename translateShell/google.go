@@ -18,5 +18,5 @@ func TransByGoogle(proxy, language, src string, ans chan string) {
 		TransByGoogle(proxy, language, src, ans)
 	}
 	ans <- string(output)
-	close(ans)
+	//close(ans)
 }
