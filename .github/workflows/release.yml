@@ -7,6 +7,8 @@ on:
     # run only against tags
     tags:
       - "*"
+      - "v*"
+    branches: [ "master" ]
 
 permissions:
   contents: write

@@ -5,7 +5,6 @@ import (
 	"freeTranslate/sql"
 	"log/slog"
 	"os"
-	"runtime"
 	"time"
 )
 
@@ -21,10 +20,6 @@ func Translate(src string) string {
 	}()
 	bing := make(chan string, 1)
 	google := make(chan string, 1)
-	if runtime.GOOS == "windows" {
-		slog.Warn("windows系统需要在Linux子系统中运行")
-		os.Exit(-1)
-	}
 
 	// from := os.Getenv("from")
 	// to := os.Getenv("to")
