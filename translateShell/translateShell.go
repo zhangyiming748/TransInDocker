@@ -6,7 +6,6 @@ import (
 	"log/slog"
 	"os"
 	"runtime"
-	"strings"
 	"time"
 )
 
@@ -27,10 +26,11 @@ func Translate(src string) string {
 		os.Exit(-1)
 	}
 
-	from := os.Getenv("from")
-	to := os.Getenv("to")
+	// from := os.Getenv("from")
+	// to := os.Getenv("to")
 	proxy := os.Getenv("proxy")
-	language := strings.Join([]string{from, to}, ":")
+	//language := strings.Join([]string{from, to}, ":")
+	language := ":zh-CN"
 
 	go TransByGoogle(proxy, language, src, google)
 	go TransByBing(proxy, language, src, bing)
@@ -47,8 +47,8 @@ func Translate(src string) string {
 
 	dst = replace.ChinesePunctuation(dst)
 
-	his.From = from
-	his.To = to
+	his.From = "auto"
+	his.To = "zh-CN"
 	his.Src = src
 	his.Dst = dst
 
