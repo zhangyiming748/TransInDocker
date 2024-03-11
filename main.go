@@ -78,6 +78,7 @@ func trans(srt string) {
 			time.Sleep(1 * time.Second)
 		}
 		dst = replace.GetSensitive(dst)
+		dst = replace.Falied(dst)
 		slog.Info("", slog.String("文件名", tmpname), slog.String("原文", src), slog.String("译文", dst))
 		after.WriteString(fmt.Sprintf("%s\n", src))
 		after.WriteString(fmt.Sprintf("%s\n", dst))

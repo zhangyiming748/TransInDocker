@@ -74,3 +74,25 @@ func Effective(s string) bool {
 	}
 	return false
 }
+
+/*
+替换掉失败查询留下的信息
+*/
+func Falied(dst string) string {
+	if strings.Contains(dst, "\u001B") {
+		strings.Replace(dst, "\u001B", "", -1)
+	}
+	if strings.Contains(dst, "[33mDidyoumean[1mI'malwayshereI'vefoundaverygoodprettyoutfit[22m[0m") {
+		strings.Replace(dst, "[33mDidyoumean[1mI'malwayshereI'vefoundaverygoodprettyoutfit[22m[0m", "", 1)
+	}
+	if strings.Contains(dst, "[33m[WARNING]Connectiontimedout.RetryingIPv4connection.[0m") {
+		strings.Replace(dst, "[33m[WARNING]Connectiontimedout.RetryingIPv4connection.[0m", "", 1)
+	}
+	if strings.Contains(dst, "[33mDidyoumean[1mIt'shate,ithate,ithate,ithate.[22m[0m") {
+		strings.Replace(dst, "[33mDidyoumean[1mIt'shate,ithate,ithate,ithate.[22m[0m", "", 1)
+	}
+	if strings.Contains(dst, "\u001B[33m[WARNING]Connectiontimedout.RetryingIPv4connection.[0m") {
+		strings.Replace(dst, "\u001B[33m[WARNING]Connectiontimedout.RetryingIPv4connection.[0m", "", 1)
+	}
+	return dst
+}
