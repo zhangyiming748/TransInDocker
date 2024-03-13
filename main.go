@@ -74,11 +74,28 @@ func trans(srt string) {
 			dst = cache.Dst
 			slog.Debug("find in cache")
 		} else {
-		RETRY:
+			//RETRY:
+			//	dst = translateShell.Translate(afterSrc)
+			//	time.Sleep(1 * time.Second)
+			//	if replace.Falied(dst) {
+			//		goto RETRY
+			//	}
+			//}
 			dst = translateShell.Translate(afterSrc)
-			time.Sleep(1 * time.Second)
 			if replace.Falied(dst) {
-				goto RETRY
+				dst = translateShell.Translate(afterSrc)
+				time.Sleep(1 * time.Second)
+				// 重试第1次
+				if replace.Falied(dst) {
+					dst = translateShell.Translate(afterSrc)
+					time.Sleep(1 * time.Second)
+					// 重试第2次
+					if replace.Falied(dst) {
+						dst = translateShell.Translate(afterSrc)
+						time.Sleep(1 * time.Second)
+						// 重试第3次
+					}
+				}
 			}
 		}
 		dst = replace.GetSensitive(dst)
