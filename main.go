@@ -74,11 +74,14 @@ func trans(srt string) {
 			dst = cache.Dst
 			slog.Debug("find in cache")
 		} else {
+		RETRY:
 			dst = translateShell.Translate(afterSrc)
 			time.Sleep(1 * time.Second)
+			if replace.Falied(dst) {
+				goto RETRY
+			}
 		}
 		dst = replace.GetSensitive(dst)
-		dst = replace.Falied(dst)
 		slog.Info("", slog.String("文件名", tmpname), slog.String("原文", src), slog.String("译文", dst))
 		after.WriteString(fmt.Sprintf("%s\n", src))
 		after.WriteString(fmt.Sprintf("%s\n", dst))

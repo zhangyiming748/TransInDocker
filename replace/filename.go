@@ -78,21 +78,33 @@ func Effective(s string) bool {
 /*
 替换掉失败查询留下的信息
 */
-func Falied(dst string) string {
+func Falied(dst string) bool {
 	if strings.Contains(dst, "\u001B") {
-		strings.Replace(dst, "\u001B", "", -1)
+		return true
 	}
 	if strings.Contains(dst, "[33mDidyoumean[1mI'malwayshereI'vefoundaverygoodprettyoutfit[22m[0m") {
-		strings.Replace(dst, "[33mDidyoumean[1mI'malwayshereI'vefoundaverygoodprettyoutfit[22m[0m", "", 1)
+		return true
 	}
 	if strings.Contains(dst, "[33m[WARNING]Connectiontimedout.RetryingIPv4connection.[0m") {
-		strings.Replace(dst, "[33m[WARNING]Connectiontimedout.RetryingIPv4connection.[0m", "", 1)
+		return true
 	}
 	if strings.Contains(dst, "[33mDidyoumean[1mIt'shate,ithate,ithate,ithate.[22m[0m") {
-		strings.Replace(dst, "[33mDidyoumean[1mIt'shate,ithate,ithate,ithate.[22m[0m", "", 1)
+		return true
 	}
 	if strings.Contains(dst, "\u001B[33m[WARNING]Connectiontimedout.RetryingIPv4connection.[0m") {
-		strings.Replace(dst, "\u001B[33m[WARNING]Connectiontimedout.RetryingIPv4connection.[0m", "", 1)
+		return true
 	}
-	return dst
+	if strings.Contains(dst, "\u001B[33mDidyoumean\u001B[1mLongago,therewasasmallkingdomcalledViridian.\u001B[22m\u001B[0m") {
+		return true
+	}
+	if strings.Contains(dst, "\u001B[33mDidyoumean\u001B[1m") {
+		return true
+	}
+	if strings.Contains(dst, "\u001B[22m\u001B[0m") {
+		return true
+	}
+	if strings.Contains(dst, "\u001B[22m\u001B[0m") {
+		return true
+	}
+	return false
 }
