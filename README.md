@@ -11,4 +11,9 @@ Translate-shell in docker
 ```bash
 docker run -dit --rm --name=trans -v /path/to/origin/srt:/srt -e proxy=192.168.1.5:8889 -e from=ja -e to=zh trans:latest srt
 docker run -dit --rm --name=trans -v /f/large/GirlFriend4ever/G4E:/srt -e proxy=192.168.1.5:8889 -e from=en -e to=zh trans:latest srt
+docker run -dit --rm --name=trans -v '/c/Users/zen/Downloads/Telegram:/srt' -e proxy=192.168.1.5:8889 -e from=en -e to=zh trans:latest srt
+
+
+docker run -dit --name=trans --rm -v '/f/srt/20240315/ja:/srt' -e proxy=192.168.1.5:8889 trans:latest srt
+
 ```
