@@ -82,21 +82,33 @@ func trans(srt string) {
 			//	}
 			//}
 			dst = translateShell.Translate(afterSrc)
-			if replace.Falied(dst) {
-				dst = translateShell.Translate(afterSrc)
+			var count int
+			for replace.Falied(dst) {
+				slog.Error("查询失败", slog.Int("重试", count))
 				time.Sleep(1 * time.Second)
-				// 重试第1次
-				if replace.Falied(dst) {
-					dst = translateShell.Translate(afterSrc)
-					time.Sleep(1 * time.Second)
-					// 重试第2次
-					if replace.Falied(dst) {
-						dst = translateShell.Translate(afterSrc)
-						time.Sleep(1 * time.Second)
-						// 重试第3次
-					}
-				}
+				dst = translateShell.Translate(afterSrc)
+				count++
 			}
+			//if replace.Falied(dst) {
+			//	time.Sleep(1 * time.Second)
+			//	slog.Error("查询失败,重试第一次")
+			//	dst = translateShell.Translate(afterSrc)
+			//
+			//	// 重试第1次
+			//	if replace.Falied(dst) {
+			//		time.Sleep(1 * time.Second)
+			//		slog.Error("查询失败,重试第二次")
+			//		dst = translateShell.Translate(afterSrc)
+			//
+			//		// 重试第2次
+			//		if replace.Falied(dst) {
+			//			time.Sleep(1 * time.Second)
+			//			slog.Error("查询失败,重试第三次")
+			//			dst = translateShell.Translate(afterSrc)
+			//			// 重试第3次
+			//		}
+			//	}
+			//}
 		}
 		dst = replace.GetSensitive(dst)
 		slog.Info("", slog.String("文件名", tmpname), slog.String("原文", src), slog.String("译文", dst))

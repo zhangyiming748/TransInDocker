@@ -85,9 +85,6 @@ func Falied(dst string) bool {
 	if strings.Contains(dst, "Showingtranslation") {
 		return true
 	}
-	if strings.Contains(dst, "[33m[WARNING]") {
-		return true
-	}
 	if strings.Contains(dst, "Connectiontimedout.RetryingIPv4connection") {
 		return true
 	}
@@ -97,13 +94,10 @@ func Falied(dst string) bool {
 	if strings.Contains(dst, "Didyoumean") {
 		return true
 	}
-	if strings.Contains(dst, "Showingtranslationforusenoautotodisableautocorrect") {
-		return true
-	}
 	if strings.Contains(dst, "[22m") {
 		return true
 	}
-	if strings.Contains(dst, "[33mShowingtranslationforusenoautotodisableautocorrect") {
+	if strings.Contains(dst, "[33mm") {
 		return true
 	}
 	return false
