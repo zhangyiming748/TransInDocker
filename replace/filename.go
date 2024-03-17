@@ -82,28 +82,24 @@ func Falied(dst string) bool {
 	if strings.Contains(dst, "\u001B") {
 		return true
 	}
-	if strings.Contains(dst, "[33mDidyoumean[1mI'malwayshereI'vefoundaverygoodprettyoutfit[22m[0m") {
+	if strings.Contains(dst, "Showingtranslation") {
 		return true
 	}
-	if strings.Contains(dst, "[33mShowingtranslationforusenoautotodisableautocorrect[0m") {
+	if strings.Contains(dst, "[33m[WARNING]") {
 		return true
 	}
-	if strings.Contains(dst, "[33m[WARNING]Connectiontimedout.RetryingIPv4connection.[0m") {
+	if strings.Contains(dst, "Connectiontimedout.RetryingIPv4connection") {
 		return true
 	}
-	if strings.Contains(dst, "[33mDidyoumean[1mIt'shate,ithate,ithate,ithate.[22m[0m") {
+	if strings.Contains(dst, "[WARNING]") {
 		return true
 	}
-	if strings.Contains(dst, "[33m[WARNING]Connectiontimedout.RetryingIPv4connection.[0m") {
+	if strings.Contains(dst, "Didyoumean") {
 		return true
 	}
-	if strings.Contains(dst, "[33mDidyoumean\u001B[1mLongago,therewasasmallkingdomcalledViridian.") {
+	if strings.Contains(dst, "Showingtranslationforusenoautotodisableautocorrect") {
 		return true
 	}
-	if strings.Contains(dst, "[33mDidyoumean") {
-		return true
-	}
-
 	if strings.Contains(dst, "[22m") {
 		return true
 	}
