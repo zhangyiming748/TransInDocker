@@ -34,9 +34,9 @@ func init() {
 	sql.SetEngine()
 }
 
-var fresh []string
-
 func main() {
+	c := new(translateShell.Count)
+	defer c.GetAll()
 	replace.SetSensitive()
 	//folder := "/srt"
 	folder := "/mnt/f/srt"
@@ -45,11 +45,11 @@ func main() {
 		if strings.Contains(file, "origin") {
 			continue
 		}
-		trans(file)
+		trans(file, c)
 	}
 }
 
-func trans(srt string) {
+func trans(srt string, c *translateShell.Count) {
 	//host := strings.Split(util.GetVal("shell", "proxy"), ":")[0]
 	//port := strings.Split(util.GetVal("shell", "proxy"), ":")[1]
 	//需要一个proxy变量
@@ -76,26 +76,27 @@ func trans(srt string) {
 		if result := cache.FindOneBySrc(); result.Error == nil {
 			dst = cache.Dst
 			slog.Debug("find in cache")
+			c.SetCache()
 		} else {
-			dst = translateShell.Translate(afterSrc)
+			dst = translateShell.Translate(afterSrc, c)
 			var count int
 			for replace.Falied(dst) {
 				if count > 3 {
 					slog.Error("重试三次后依然失败", slog.String("原文", afterSrc), slog.String("译文", dst))
+					dst = replace.Hans(dst)
 					break
 				}
 				slog.Error("查询失败", slog.Int("重试", count))
 				time.Sleep(1 * time.Second)
-				dst = translateShell.Translate(afterSrc)
+				dst = translateShell.Translate(afterSrc, c)
 				count++
 			}
 		}
 		dst = replace.GetSensitive(dst)
-		dst = replace.Hans(dst)
+		// dst = replace.Hans(dst)
 		slog.Info("", slog.String("文件名", tmpname), slog.String("原文", src), slog.String("译文", dst))
 		after.WriteString(fmt.Sprintf("%s\n", src))
 		after.WriteString(fmt.Sprintf("%s\n", dst))
-		fresh = append(fresh, dst)
 
 		after.WriteString(fmt.Sprintf("%s\n", before[i+3]))
 		after.Sync()

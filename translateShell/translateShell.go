@@ -12,7 +12,7 @@ const (
 	TIMEOUT = 8 //second
 )
 
-func Translate(src string) string {
+func Translate(src string, c *Count) string {
 	//trans -brief ja:zh "私の手の動きに合わせて、そう"
 	his := new(sql.History)
 	defer func() {
@@ -37,14 +37,16 @@ func Translate(src string) string {
 	select {
 	case dst = <-bing:
 		his.Source = "bing"
+		c.SetBing()
 	case dst = <-google:
 		his.Source = "google"
+		c.SetGoogle()
 	case <-time.After(TIMEOUT * time.Second):
 		slog.Error("单词翻译出现严重问题")
 	}
 
 	dst = replace.ChinesePunctuation(dst)
-
+	dst = replace.Hans(dst)
 	his.From = "auto"
 	his.To = "zh-CN"
 	his.Src = src
