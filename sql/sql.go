@@ -11,7 +11,11 @@ import (
 var db *gorm.DB
 
 func SetEngine() {
-	db, _ = gorm.Open(sqlite.Open("/srt/trans.db"), &gorm.Config{})
+	if hasSrt() {
+		db, _ = gorm.Open(sqlite.Open("/srt/trans.db"), &gorm.Config{})
+	} else {
+		db, _ = gorm.Open(sqlite.Open("trans.db"), &gorm.Config{})
+	}
 	// 迁移 schema
 	err := db.AutoMigrate(History{})
 	err = db.AutoMigrate(Sensitive{})
@@ -36,4 +40,23 @@ func SetEngine() {
 }
 func GetEngine() *gorm.DB {
 	return db
+}
+
+/*
+判断是否存在srt文件夹
+*/
+func hasSrt() bool {
+	folderPath := "/srt"
+
+	_, err := os.Stat(folderPath)
+	if err == nil {
+		fmt.Println("srt文件夹存在")
+		return true
+	} else if os.IsNotExist(err) {
+		fmt.Println("srt文件夹不存在")
+		return false
+	} else {
+		fmt.Println("获取文件夹信息出错：", err)
+		return false
+	}
 }

@@ -24,6 +24,9 @@ func Translate(src string) string {
 	// from := os.Getenv("from")
 	// to := os.Getenv("to")
 	proxy := os.Getenv("proxy")
+	if proxy == "" {
+		proxy = "192.168.1.5:8889"
+	}
 	//language := strings.Join([]string{from, to}, ":")
 	language := ":zh-CN"
 
