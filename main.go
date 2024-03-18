@@ -37,12 +37,12 @@ func main() {
 	replace.SetSensitive()
 	folder := "/srt"
 	// folder = "/mnt/d/git/RemoveIntroOutro/srt"
-	files := GetFileInfo.GetAllFileInfo(folder, "srt")
+	files, _ := GetFileInfo.GetAllFileInfoFast(folder, "srt")
 	for _, file := range files {
-		if strings.Contains(file.PurgeName, "origin") {
+		if strings.Contains(file, "origin") {
 			continue
 		}
-		trans(file.FullPath)
+		trans(file)
 	}
 }
 
