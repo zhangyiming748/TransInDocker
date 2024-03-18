@@ -20,6 +20,9 @@ import (
 
 func init() {
 	proxy := os.Getenv("proxy")
+	if proxy == "" {
+		proxy = "192.168.1.5:8889"
+	}
 	host, port, _ := net.SplitHostPort(proxy)
 	if conn, err := net.DialTimeout("tcp", net.JoinHostPort(host, port), time.Second*5); err != nil {
 		slog.Error("代理网址不可达")
@@ -35,8 +38,8 @@ var fresh []string
 
 func main() {
 	replace.SetSensitive()
-	folder := "/srt"
-	// folder = "/mnt/d/git/RemoveIntroOutro/srt"
+	//folder := "/srt"
+	folder := "/mnt/f/srt"
 	files, _ := GetFileInfo.GetAllFileInfoFast(folder, "srt")
 	for _, file := range files {
 		if strings.Contains(file, "origin") {
@@ -74,41 +77,19 @@ func trans(srt string) {
 			dst = cache.Dst
 			slog.Debug("find in cache")
 		} else {
-			//RETRY:
-			//	dst = translateShell.Translate(afterSrc)
-			//	time.Sleep(1 * time.Second)
-			//	if replace.Falied(dst) {
-			//		goto RETRY
-			//	}
-			//}
 			dst = translateShell.Translate(afterSrc)
 			var count int
 			for replace.Falied(dst) {
+				if count > 3 {
+					slog.Error("重试三次后依然失败", slog.String("原文", afterSrc), slog.String("译文", dst))
+					dst = afterSrc
+					break
+				}
 				slog.Error("查询失败", slog.Int("重试", count))
 				time.Sleep(1 * time.Second)
 				dst = translateShell.Translate(afterSrc)
 				count++
 			}
-			//if replace.Falied(dst) {
-			//	time.Sleep(1 * time.Second)
-			//	slog.Error("查询失败,重试第一次")
-			//	dst = translateShell.Translate(afterSrc)
-			//
-			//	// 重试第1次
-			//	if replace.Falied(dst) {
-			//		time.Sleep(1 * time.Second)
-			//		slog.Error("查询失败,重试第二次")
-			//		dst = translateShell.Translate(afterSrc)
-			//
-			//		// 重试第2次
-			//		if replace.Falied(dst) {
-			//			time.Sleep(1 * time.Second)
-			//			slog.Error("查询失败,重试第三次")
-			//			dst = translateShell.Translate(afterSrc)
-			//			// 重试第3次
-			//		}
-			//	}
-			//}
 		}
 		dst = replace.GetSensitive(dst)
 		slog.Info("", slog.String("文件名", tmpname), slog.String("原文", src), slog.String("译文", dst))
