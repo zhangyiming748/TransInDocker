@@ -11,11 +11,11 @@ import (
 var db *gorm.DB
 
 func SetEngine() {
-	if hasSrt() {
-		db, _ = gorm.Open(sqlite.Open("/srt/trans.db"), &gorm.Config{})
-	} else {
-		db, _ = gorm.Open(sqlite.Open("trans.db"), &gorm.Config{})
-	}
+
+	//db, _ = gorm.Open(sqlite.Open("/srt/trans.db"), &gorm.Config{})
+
+	db, _ = gorm.Open(sqlite.Open("trans.db"), &gorm.Config{})
+
 	// 迁移 schema
 	err := db.AutoMigrate(History{})
 	err = db.AutoMigrate(Sensitive{})

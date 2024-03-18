@@ -82,7 +82,6 @@ func trans(srt string) {
 			for replace.Falied(dst) {
 				if count > 3 {
 					slog.Error("重试三次后依然失败", slog.String("原文", afterSrc), slog.String("译文", dst))
-					dst = afterSrc
 					break
 				}
 				slog.Error("查询失败", slog.Int("重试", count))
@@ -92,6 +91,7 @@ func trans(srt string) {
 			}
 		}
 		dst = replace.GetSensitive(dst)
+		dst = replace.Hans(dst)
 		slog.Info("", slog.String("文件名", tmpname), slog.String("原文", src), slog.String("译文", dst))
 		after.WriteString(fmt.Sprintf("%s\n", src))
 		after.WriteString(fmt.Sprintf("%s\n", dst))
