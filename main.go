@@ -38,8 +38,8 @@ func main() {
 	c := new(translateShell.Count)
 	defer c.GetAll()
 	replace.SetSensitive()
-	//folder := "/srt"
-	folder := "/mnt/f/srt"
+	folder := "/srt"
+	//folder := "/mnt/f/srt"
 	files, _ := GetFileInfo.GetAllFileInfoFast(folder, "srt")
 	for _, file := range files {
 		if strings.Contains(file, "origin") {

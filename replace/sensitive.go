@@ -86,5 +86,15 @@ func Hans(input string) string {
 		//fmt.Printf("%d,%s", i, match)
 		done = strings.Join([]string{done, match}, "")
 	}
+	done = remove331x220(done)
+
 	return done
+}
+
+/*
+golang 实现 从字符串中找到以331开头220结尾的子字符串 删除后返回新的字符串
+*/
+func remove331x220(s string) string {
+	re := regexp.MustCompile(`331.*?220`)
+	return re.ReplaceAllString(s, "")
 }
