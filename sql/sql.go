@@ -12,9 +12,9 @@ var db *gorm.DB
 
 func SetEngine() {
 
-	//db, _ = gorm.Open(sqlite.Open("/srt/trans.db"), &gorm.Config{})
+	db, _ = gorm.Open(sqlite.Open("/srt/trans.db"), &gorm.Config{})
 
-	db, _ = gorm.Open(sqlite.Open("trans.db"), &gorm.Config{})
+	// db, _ = gorm.Open(sqlite.Open("trans.db"), &gorm.Config{})
 
 	// 迁移 schema
 	err := db.AutoMigrate(History{})
