@@ -111,7 +111,7 @@ func setLog() {
 		AddSource: true,
 		Level:     slog.LevelDebug, // slog 默认日志级别是 info
 	}
-	file := "trans.log"
+	file := "/srt/trans.log"
 	logf, err := os.OpenFile(file, os.O_RDWR|os.O_CREATE|os.O_APPEND, 0777)
 	if err != nil {
 		panic(err)
