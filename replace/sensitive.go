@@ -26,7 +26,7 @@ func GetSensitive(str string) string {
 func SetSensitive() {
 	m := new(sql.Sensitive)
 	ss := m.GetAll()
-	lines := readByLine("sensitive.txt")
+	lines := readByLine("/srt/sensitive.txt")
 	for _, line := range lines {
 		before := strings.Split(line, ":")[0]
 		after := strings.Split(line, ":")[1]
