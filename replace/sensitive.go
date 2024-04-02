@@ -1,8 +1,12 @@
 package replace
 
 import (
+	"bufio"
+	"fmt"
 	"freeTranslate/sql"
+	"io"
 	"log/slog"
+	"os"
 	"regexp"
 	"strings"
 )
@@ -18,9 +22,17 @@ func GetSensitive(str string) string {
 	}
 	return str
 }
+
 func SetSensitive() {
 	m := new(sql.Sensitive)
 	ss := m.GetAll()
+	lines := readByLine("sensitive.txt")
+	for _, line := range lines {
+		before := strings.Split(line, ":")[0]
+		after := strings.Split(line, ":")[1]
+		slog.Info("写入敏感词", slog.String("before", before), slog.String("after", after))
+		Sensitive[before] = after
+	}
 	for _, s := range ss {
 		slog.Info("加载敏感词", slog.String("before", s.Src), slog.String("after", s.Dst))
 		Sensitive[s.Src] = s.Dst
@@ -97,4 +109,24 @@ golang 实现 从字符串中找到以331开头220结尾的子字符串 删除�
 func remove331x220(s string) string {
 	re := regexp.MustCompile(`331.*?220`)
 	return re.ReplaceAllString(s, "")
+}
+func readByLine(fp string) []string {
+	lines := []string{}
+	fi, err := os.Open(fp)
+	if err != nil {
+		fmt.Printf("Error: %s\n", err)
+		slog.Warn("按行读文件出错")
+		return []string{}
+	}
+	defer fi.Close()
+
+	br := bufio.NewReader(fi)
+	for {
+		a, _, c := br.ReadLine()
+		if c == io.EOF {
+			break
+		}
+		lines = append(lines, string(a))
+	}
+	return lines
 }

@@ -8,8 +8,8 @@ import (
 type Sensitive struct {
 	gorm.Model
 	ID        uint   `gorm:"primaryKey"`
-	Src       string `gorm:"sensitive"`
-	Dst       string `gorm:"safety"`
+	Src       string `gorm:"sensitive"` // 原词
+	Dst       string `gorm:"safety"`    // 安全词
 	CreatedAt time.Time
 }
 
