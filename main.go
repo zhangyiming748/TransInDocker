@@ -2,7 +2,7 @@ package main
 
 import (
 	"fmt"
-	"gopkg.in/natefinch/lumberjack.v2"
+	"github.com/zhangyiming748/lumberjack"
 	"io"
 	"log"
 	"math/rand"
@@ -34,10 +34,6 @@ func init() {
 	setLog()
 	sql.Initial()
 }
-
-var (
-	db = sql.GetDatabase()
-)
 
 func main() {
 	c := new(translateShell.Count)
@@ -76,7 +72,7 @@ func trans(srt string, c *translateShell.Count) {
 
 		var dst string
 
-		if get, err := db.Hash().Get("translations", src); err == nil {
+		if get, err := sql.GetDatabase().Hash().Get("translations", src); err == nil {
 			dst = get.String()
 			fmt.Println("find in cache")
 			c.SetCache()
@@ -96,8 +92,8 @@ func trans(srt string, c *translateShell.Count) {
 			}
 		}
 		dst = replace.GetSensitive(dst)
-		db.Hash().Set("translations", src, dst)
-		fmt.Printf("文件名:%v\t原文:%v\t译文:%v\n", tmpname, src, dst)
+		sql.GetDatabase().Hash().Set("translations", src, dst)
+		log.Printf("文件名:%v\n原文:%v\n译文:%v\n", tmpname, src, dst)
 		after.WriteString(fmt.Sprintf("%s\n", src))
 		after.WriteString(fmt.Sprintf("%s\n", dst))
 		after.WriteString(fmt.Sprintf("%s\n", before[i+3]))

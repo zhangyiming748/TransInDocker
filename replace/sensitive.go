@@ -26,18 +26,22 @@ func GetSensitive(str string) string {
 }
 
 func SetSensitive() {
-	fp := strings.Join([]string{constant.GetRoot(), "sensitive.txt"}, string(os.PathSeparator))
+	fp1 := strings.Join([]string{constant.GetRoot(), "sensitive.txt"}, string(os.PathSeparator))
+	fp2 := "sensitive.txt"
 	lines := []string{}
-	if util.IsExist(fp) {
-		log.Println("从文件中加载敏感词")
-		lines = readByLine(fp)
+	if util.IsExist(fp1) {
+		log.Printf("从视频目录%v中加载敏感词\n", fp1)
+		lines = readByLine(fp1)
+	} else if util.IsExist(fp2) {
+		log.Printf("从程序目录%v中加载敏感词\n", fp2)
+		lines = readByLine(fp1)
 	} else {
-		log.Println("没有在字幕目录下找到敏感词文件")
+		log.Println("没有找到敏感词文件")
 	}
 	for _, line := range lines {
 		before := strings.Split(line, ":")[0]
 		after := strings.Split(line, ":")[1]
-		log.Printf("写入敏感词\tbefore%v\tafter:%v\n", before, after)
+		log.Printf("写入敏感词:\tbefore:%v\tafter:%v\n", before, after)
 		Sensitive[before] = after
 		sql.GetDatabase().Hash().Set("sensitive", before, after)
 	}

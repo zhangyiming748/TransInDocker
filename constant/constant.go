@@ -43,7 +43,7 @@ var T2B = map[string]string{
 	"sp":    "spa", // 西班牙语
 }
 var (
-	root  = "/mnt/e/pikpak/MILF"
+	root  = "/Users/zen/Github/FastYt-dlp"
 	proxy = "192.168.1.20:8889"
 	from  = ":zh-CN"
 )
