@@ -43,7 +43,7 @@ var T2B = map[string]string{
 	"sp":    "spa", // 西班牙语
 }
 var (
-	root  = "C:\\Users\\zen\\Github\\TransInDocker"
+	root  = "/Users/zen/Github/FastYt-dlp"
 	proxy = "192.168.1.20:8889"
 	from  = ":zh-CN"
 )

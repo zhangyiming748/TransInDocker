@@ -19,7 +19,7 @@ func GetSensitive(str string) string {
 	for k, v := range Sensitive {
 		if strings.Contains(str, k) {
 			str = strings.Replace(str, k, v, -1)
-			log.Printf("替换生效\tbefore:%v\tafter%v\t替换之后的完整句子:%v\n", k, v, str)
+			log.Printf("替换生效\tbefore:%v\tafter:%v\t替换之后的完整句子:%v\n", k, v, str)
 		}
 	}
 	return str
@@ -32,7 +32,8 @@ func SetSensitive() {
 	if util.IsExist(fp1) {
 		log.Printf("从视频目录%v中加载敏感词\n", fp1)
 		lines = readByLine(fp1)
-	} else if util.IsExist(fp2) {
+	}
+	if util.IsExist(fp2) {
 		log.Printf("从程序目录%v中加载敏感词\n", fp2)
 		lines = readByLine(fp1)
 	} else {

@@ -39,7 +39,6 @@ func init() {
 func main() {
 	c := new(translateShell.Count)
 	defer c.GetAll()
-
 	if r := os.Getenv("root"); r == "" {
 		log.Printf("没有设置root变量,使用默认:%v\n", constant.GetRoot())
 	} else {
