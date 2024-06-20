@@ -102,7 +102,6 @@ func trans(srt string, c *translateShell.Count) {
 	origin := strings.Join([]string{strings.Replace(srt, ".srt", "", 1), "_origin", ".srt"}, "")
 	exec.Command("cp", srt, origin).CombinedOutput()
 	os.Rename(tmpname, srt)
-
 }
 func setLog() {
 	// 创建一个用于写入文件的Logger实例

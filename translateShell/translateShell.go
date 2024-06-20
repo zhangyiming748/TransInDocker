@@ -29,7 +29,7 @@ func Translate(src string, c *Count) (dst string) {
 	ch := make(chan Result)
 	var once sync.Once
 	proxy := constant.GetProxy()
-	language := constant.GetFrom()
+	language := ":zh-CN"
 	retry := 0
 	for {
 		go TransByGoogle(proxy, language, src, ch, c, &once)
